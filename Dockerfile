@@ -14,7 +14,7 @@ LABEL tags="RNA-seq"
 # Maintainer
 MAINTAINER Roberto Vera Alvarez <r78v10a07@gmail.com>
 
-ENV URL=https://github.com/ncbi/TPMCalculator
+ENV URL=https://github.com/pdeven/TPMCalculator
 ENV BAMTOOLS_URL=https://github.com/pezmaster31/bamtools
 ENV FOLDER=TPMCalculator
 ENV BAMTOOLS_FOLDER=bamtools
@@ -50,6 +50,8 @@ RUN cd $DST && \
 
 RUN cd $DST && \
         git clone $URL && \
+        git checkout BT-1328-tpm-file-outputs-should-not-generate-in-home-fir-modify-fork-and-try && \
+        git pull && \
         cd $FOLDER && \
 	make && \
 	mv $DST/$FOLDER/bin/* /usr/local/bin/ && \
