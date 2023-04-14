@@ -457,7 +457,7 @@ void ReadFactory::printResults(bool singleFile, bool extendedOutput, bool all_fe
     SPtrIsoformNGS i;
     SPtrFeatureNGS f;
     ofstream out_trans, ent_trans, out_gene, ent_gene, ent_gene_unique;
-    int output_path_length = output_path.size()
+    int output_path_length = output_path.size();
     if(output_path[output_path_length-1]!='/'){
         output_path+="/";
     }
