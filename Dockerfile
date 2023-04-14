@@ -1,13 +1,13 @@
 # Base Image
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # Metadata
-LABEL base.image="ubuntu:18.04"
+LABEL base.image="ubuntu:20.04"
 LABEL software="TPMCalculator"
-LABEL software.version="0.0.3"
+LABEL software.version="0.0.3.1"
 LABEL description="This program calculates the TPM (Transcript per Millions) values for the exons and introns from NGS RNA-Seq aligned reads (BAM files)"
-LABEL website="https://github.com/ncbi/TPMCalculator"
-LABEL documentation="https://github.com/ncbi/TPMCalculator"
+LABEL website="https://github.com/pdeven/TPMCalculator"
+LABEL documentation="https://github.com/pdeven/TPMCalculator"
 LABEL license="http://www.gnu.org/licenses/"
 LABEL tags="RNA-seq"
 
@@ -25,17 +25,17 @@ ENV LDFLAGS="-L $BAMTOOLS_DIR/lib/bamtools -Wl,-rpath,$BAMTOOLS_DIR/lib/bamtools
 
 USER root
 
-RUN apt-get clean all && \
-    apt-get update && \
-    apt-get -y upgrade && \
-    apt-get install -y apt-utils && \
-    apt-get install -y tzdata && \
-    apt-get install -y software-properties-common && \
-    apt-get install -y gcc g++ perl wget zip make && \
-    apt-get install -y unzip cmake git libjsoncpp-dev zlib1g-dev && \
-    apt-get clean && \
-    apt-get purge && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get clean all
+RUN apt-get update
+RUN apt-get -y upgrade
+RUN apt-get install -y apt-utils
+RUN apt-get install -y tzdata
+RUN apt-get install -y software-properties-common
+RUN apt-get install -y gcc g++ perl wget zip make
+RUN apt-get install -y unzip cmake git libjsoncpp-dev zlib1g-dev
+RUN apt-get clean
+RUN apt-get purge
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN cd $DST && \
         git clone $BAMTOOLS_URL && \
@@ -50,8 +50,6 @@ RUN cd $DST && \
 
 RUN cd $DST && \
         git clone $URL && \
-        git checkout BT-1328-tpm-file-outputs-should-not-generate-in-home-fir-modify-fork-and-try && \
-        git pull && \
         cd $FOLDER && \
 	make && \
 	mv $DST/$FOLDER/bin/* /usr/local/bin/ && \
